@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <Math.h>
 
 void simpleTest(float f)
 {
