@@ -62,18 +62,18 @@ CrossBridge没有完整实现LLVM的FP_ROUND(高精度类型数据转低精度�
 另外生成一个经过CrossBridge编译后的结果的编译中间文件：
 * simpletest.cpp.lto.1.as 这个文件是crossbridge编译过程中生成的Machine Instruction文件 
 
-* 按照程序逻辑 正常输出结果为:
-	如果S==0, 那么tempff == f？ 为 1(true),  tempff2 == f？为 0(false)
-	如果S==1, 那么tempff == f？ 为 0(false),  tempff2 == f？为 1(true)
+* 按照程序逻辑 正常输出结果为:   
+        如果S==0, 那么tempff == f？ 为 1(true),  tempff2 == f？为 0(false)    
+        如果S==1, 那么tempff == f？ 为 0(false),  tempff2 == f？为 1(true)
 	
-* 分别运行两个程序，**可以发现两个程序运行结果不一致**，simpletest_llvm.exe为正常运行结果，simpletest_crossbridge.exe运行结果不正常
+* 分别运行两个程序，**可以发现两个程序运行结果不一致**:    
+        simpletest_llvm.exe为正常运行结果，simpletest_crossbridge.exe运行结果不正常  
 
 
 * 问题分析:
 
-文件simpletest.cpp.lto.1.as:
-
-line 59: f2 = (f1 * f1)      //f1*f1所得f2是64位精度的
+文件simpletest.cpp.lto.1.as:   
+line 59: f2 = (f1 * f1)      //f1*f1所得f2是64位精度的    
 line 60: s1 = f2/*fround*/  //fround本应实现从高精度转到低精度的转换，而实际只是简单赋值，并没有实现转换
 
 
@@ -138,17 +138,18 @@ there is one more intermediate file of machine instruction from CrossBridge：
 * simpletest.cpp.lto.1.as  
 
 
-* According to test program, the correct output is:
-	if S==0, then tempff == f？ is 1(true),  tempff2 == f？is 0(false)
+* According to test program, the correct output is:   
+	if S==0, then tempff == f？ is 1(true),  tempff2 == f？is 0(false)    
 	if S==1, then tempff == f？ is 0(false),  tempff2 == f？is 1(true)
 	
-* **But we can find that the outputs of two EXEs are inconsistent!**. The output from simpletest_llvm.exe is correct， but the other one from simpletest_crossbridge.exe is incorrect!
+* **But we can find that the outputs of two EXEs are inconsistent!**:    
+       The output from simpletest_llvm.exe is correct， but the other one from simpletest_crossbridge.exe is incorrect!
 
 
 * Problem Analysis
 
-in file simpletest.cpp.lto.1.as:
-line 59: f2 = (f1 * f1)      //f1*f1, so f2 is 64-bit high-precision type
+in file simpletest.cpp.lto.1.as:    
+line 59: f2 = (f1 * f1)      //f1*f1, so f2 is 64-bit high-precision type     
 line 60: s1 = f2/*fround*/  //fround operation should convert high-precision type down to low-precision type, but here it is just a simple assignment 
 
 
