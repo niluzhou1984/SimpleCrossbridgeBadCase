@@ -70,12 +70,11 @@ CrossBridge没有完整实现LLVM的FP_ROUND(高精度类型数据转低精度�
         simpletest_llvm.exe为正常运行结果，simpletest_crossbridge.exe运行结果不正常  
 
 
-* 问题分析:
-
-文件simpletest.cpp.lto.1.as:   
+* 问题分析: 文件simpletest.cpp.lto.1.as中
+···
 line 59: f2 = (f1 * f1)      //f1*f1所得f2是64位精度的    
 line 60: s1 = f2/*fround*/  //fround本应实现从高精度转到低精度的转换，而实际只是简单赋值，并没有实现转换
-
+···
 
 #English Edition
 
@@ -146,12 +145,11 @@ there is one more intermediate file of machine instruction from CrossBridge：
        The output from simpletest_llvm.exe is correct， but the other one from simpletest_crossbridge.exe is incorrect!
 
 
-* Problem Analysis
-
-in file simpletest.cpp.lto.1.as:    
+* Problem Analysis in file simpletest.cpp.lto.1.as:    
+···
 line 59: f2 = (f1 * f1)      //f1*f1, so f2 is 64-bit high-precision type     
 line 60: s1 = f2/*fround*/  //fround operation should convert high-precision type down to low-precision type, but here it is just a simple assignment 
-
+···
 
 
 
