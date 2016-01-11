@@ -27,7 +27,16 @@ CrossBridge没有完整实现LLVM的FP_ROUND(高精度类型数据转低精度�
    * 运行里面的run.bat自动安装cygwin
    
 	我们把路径cygwinLocal/sdk 称为**SDK_PATH** ,后面的配置文件将会用到这个路径
-
+	
+	* **如果已经安装了Cygwin, 确保cygwin下面安装以下包**：   
+	make   
+	gcc-g++   
+	libuuid1  
+	libuuid-devel
+	
+	*  **如果包依赖正常情况下还是编译失败**    
+	删除cygwinLocal下的cygwin目录，然后按上面的步骤，覆盖run.bath和setup-x86.exe重新安装
+	
 ##Mac的环境搭建
 
 * [Crossbridge Sdk下载](http://sourceforge.net/projects/crossbridge-community/files/15.0.0/CrossBridge_15.0.0.3.dmg/download)
@@ -106,6 +115,15 @@ CrossBridge does not realize the opcode of FP_ROUND (the operation for convertin
    * execute run.bat to install cygwin 
    
 	And we will use symbol **SDK_PATH** to denote the path "cygwinLocal/sdk" in following descriptions.
+	
+	* **if you have installed Cygwin, make sure the following package is installed in your cygwin**：   
+	make   
+	gcc-g++   
+	libuuid1  
+	libuuid-devel
+	
+	*  **If you still can not compile test case even the package-depency is solved**    
+	delete the whole directory cygwin under directory cygwinLocal cygwin， then follow the previous steps, replace run.bath and setup-x86.exe, and run run.bat to reinstall cygwin
 
 ##Build Test Enviroment For Mac
 
