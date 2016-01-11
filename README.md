@@ -145,7 +145,7 @@ there is one more intermediate file of machine instruction from CrossBridge：
        The output from simpletest_llvm.exe is correct， but the other one from simpletest_crossbridge.exe is incorrect!
 
 
-* Problem Analysis in file simpletest.cpp.lto.1.as:    
+* Problem Analysis  -----  in file simpletest.cpp.lto.1.as:    
 ```
 	line 59: f2 = (f1 * f1)      //f1*f1, so f2 is 64-bit high-precision type     
 	line 60: s1 = f2/*fround*/  //fround operation should convert high-precision type down to low-precision type, but here it is just a simple assignment 
