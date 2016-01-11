@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>opt</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>opt - LLVM optimizer</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>opt</b> [<i>options</i>] [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>opt</b> command is the modular LLVM optimizer and analyzer. It takes LLVM source files as input, runs the specified optimizations or analyses on it, and then outputs the optimized file or the analysis results. The function of <b>opt</b> depends on whether the <b>-analyze</b> option is given.</p>
+
+<p>When <b>-analyze</b> is specified, <b>opt</b> performs various analyses of the input source. It will usually print the results on standard output, but in a few cases, it will print output to standard error or generate a file with the analysis output, which is usually done when the output is meant for another program.</p>
+
+<p>While <b>-analyze</b> is <i>not</i> given, <b>opt</b> attempts to produce an optimized output file. The optimizations available via <b>opt</b> depend upon what libraries were linked into it as well as any additional libraries that have been loaded with the <b>-load</b> option. Use the <b>-help</b> option to determine what optimizations you can use.</p>
+
+<p>If <i>filename</i> is omitted from the command line or is <i>-</i>, <b>opt</b> reads its input from standard input. Inputs can be in either the LLVM assembly language format (.ll) or the LLVM bitcode format (.bc).</p>
+
+<p>If an output filename is not specified with the <b>-o</b> option, <b>opt</b> writes its output to the standard output.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="f"><b>-f</b></dt>
+<dd>
+
+<p>Enable binary output on terminals. Normally, <b>opt</b> will refuse to write raw bitcode output if the output stream is a terminal. With this option, <b>opt</b> will write raw bitcode regardless of the output device.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output filename.</p>
+
+</dd>
+<dt id="S"><b>-S</b></dt>
+<dd>
+
+<p>Write output in LLVM intermediate language (instead of bitcode).</p>
+
+</dd>
+<dt id="passname"><b>-{passname}</b></dt>
+<dd>
+
+<p><b>opt</b> provides the ability to run any of LLVM&#39;s optimization or analysis passes in any order. The <b>-help</b> option lists all the passes available. The order in which the options occur on the command line are the order in which they are executed (within pass constraints).</p>
+
+</dd>
+<dt id="std-compile-opts"><b>-std-compile-opts</b></dt>
+<dd>
+
+<p>This is short hand for a standard list of <i>compile time optimization</i> passes. This is typically used to optimize the output from the llvm-gcc front end. It might be useful for other front end compilers as well. To discover the full set of options available, use the following command:</p>
+
+<pre><code>   llvm-as &lt; /dev/null | opt -std-compile-opts -disable-output -debug-pass=Arguments</code></pre>
+
+</dd>
+<dt id="disable-inlining"><b>-disable-inlining</b></dt>
+<dd>
+
+<p>This option is only meaningful when <b>-std-compile-opts</b> is given. It simply removes the inlining pass from the standard list.</p>
+
+</dd>
+<dt id="disable-opt"><b>-disable-opt</b></dt>
+<dd>
+
+<p>This option is only meaningful when <b>-std-compile-opts</b> is given. It disables most, but not all, of the <b>-std-compile-opts</b>. The ones that remain are <b>-verify</b>, <b>-lower-setjmp</b>, and <b>-funcresolve</b>.</p>
+
+</dd>
+<dt id="strip-debug"><b>-strip-debug</b></dt>
+<dd>
+
+<p>This option causes opt to strip debug information from the module before applying other optimizations. It is essentially the same as <b>-strip</b> but it ensures that stripping of debug information is done first.</p>
+
+</dd>
+<dt id="verify-each"><b>-verify-each</b></dt>
+<dd>
+
+<p>This option causes opt to add a verify pass after every pass otherwise specified on the command line (including <b>-verify</b>). This is useful for cases where it is suspected that a pass is creating an invalid module but it is not clear which pass is doing it. The combination of <b>-std-compile-opts</b> and <b>-verify-each</b> can quickly track down this kind of problem.</p>
+
+</dd>
+<dt id="profile-info-file-filename"><b>-profile-info-file</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the name of the file loaded by the -profile-loader option.</p>
+
+</dd>
+<dt id="stats"><b>-stats</b></dt>
+<dd>
+
+<p>Print statistics.</p>
+
+</dd>
+<dt id="time-passes"><b>-time-passes</b></dt>
+<dd>
+
+<p>Record the amount of time needed for each pass and print it to standard error.</p>
+
+</dd>
+<dt id="debug"><b>-debug</b></dt>
+<dd>
+
+<p>If this is a debug build, this option will enable debug printouts from passes which use the <i>DEBUG()</i> macro. See the <b>LLVM Programmer&#39;s Manual</b>, section <i>#DEBUG</i> for more information.</p>
+
+</dd>
+<dt id="load-plugin"><b>-load</b>=<i>plugin</i></dt>
+<dd>
+
+<p>Load the dynamic object <i>plugin</i>. This object should register new optimization or analysis passes. Once loaded, the object will add new command line options to enable various optimizations or analyses. To see the new complete list of optimizations, use the <b>-help</b> and <b>-load</b> options together. For example:</p>
+
+<pre><code>   opt -load=plugin.so -help</code></pre>
+
+</dd>
+<dt id="p"><b>-p</b></dt>
+<dd>
+
+<p>Print module after each transformation.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>opt</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

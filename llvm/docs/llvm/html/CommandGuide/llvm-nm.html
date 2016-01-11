@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-nm</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-nm - list LLVM bitcode file&#39;s symbol table</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-nm</b> [<i>options</i>] [<i>filenames...</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llvm-nm</b> utility lists the names of symbols from the LLVM bitcode files, or <b>ar</b> archives containing LLVM bitcode files, named on the command line. Each symbol is listed along with some simple information about its provenance. If no file name is specified, or <i>-</i> is used as a file name, <b>llvm-nm</b> will process a bitcode file on its standard input stream.</p>
+
+<p><b>llvm-nm</b>&#39;s default output format is the traditional BSD <b>nm</b> output format. Each such output record consists of an (optional) 8-digit hexadecimal address, followed by a type code character, followed by a name, for each symbol. One record is printed per line; fields are separated by spaces. When the address is omitted, it is replaced by 8 spaces.</p>
+
+<p>Type code characters currently supported, and their meanings, are as follows:</p>
+
+<dl>
+
+<dt id="U">U</dt>
+<dd>
+
+<p>Named object is referenced but undefined in this bitcode file</p>
+
+</dd>
+<dt id="C">C</dt>
+<dd>
+
+<p>Common (multiple definitions link together into one def)</p>
+
+</dd>
+<dt id="W">W</dt>
+<dd>
+
+<p>Weak reference (multiple definitions link together into zero or one definitions)</p>
+
+</dd>
+<dt id="t">t</dt>
+<dd>
+
+<p>Local function (text) object</p>
+
+</dd>
+<dt id="T">T</dt>
+<dd>
+
+<p>Global function (text) object</p>
+
+</dd>
+<dt id="d">d</dt>
+<dd>
+
+<p>Local data object</p>
+
+</dd>
+<dt id="D">D</dt>
+<dd>
+
+<p>Global data object</p>
+
+</dd>
+<dt id="pod">?</dt>
+<dd>
+
+<p>Something unrecognizable</p>
+
+</dd>
+</dl>
+
+<p>Because LLVM bitcode files typically contain objects that are not considered to have addresses until they are linked into an executable image or dynamically compiled &quot;just-in-time&quot;, <b>llvm-nm</b> does not print an address for any symbol, even symbols which are defined in the bitcode file.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="P"><b>-P</b></dt>
+<dd>
+
+<p>Use POSIX.2 output format. Alias for <b>--format=posix</b>.</p>
+
+</dd>
+<dt id="B-default"><b>-B</b> (default)</dt>
+<dd>
+
+<p>Use BSD output format. Alias for <b>--format=bsd</b>.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command-line options and their meanings.</p>
+
+</dd>
+<dt id="defined-only"><b>--defined-only</b></dt>
+<dd>
+
+<p>Print only symbols defined in this bitcode file (as opposed to symbols which may be referenced by objects in this file, but not defined in this file.)</p>
+
+</dd>
+<dt id="extern-only--g"><b>--extern-only</b>, <b>-g</b></dt>
+<dd>
+
+<p>Print only symbols whose definitions are external; that is, accessible from other bitcode files.</p>
+
+</dd>
+<dt id="undefined-only--u"><b>--undefined-only</b>, <b>-u</b></dt>
+<dd>
+
+<p>Print only symbols referenced but not defined in this bitcode file.</p>
+
+</dd>
+<dt id="format-fmt--f"><b>--format=</b><i>fmt</i>, <b>-f</b></dt>
+<dd>
+
+<p>Select an output format; <i>fmt</i> may be <i>sysv</i>, <i>posix</i>, or <i>bsd</i>. The default is <i>bsd</i>.</p>
+
+</dd>
+</dl>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p><b>llvm-nm</b> cannot demangle C++ mangled names, like GNU <b>nm</b> can.</p>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p><b>llvm-nm</b> exits with an exit code of zero.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>llvm-dis</a>, ar(1), nm(1)</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

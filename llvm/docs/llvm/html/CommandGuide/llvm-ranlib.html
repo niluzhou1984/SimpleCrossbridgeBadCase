@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-ranlib</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-ranlib - Generate index for LLVM archive</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-ranlib</b> [--version] [-help] &lt;archive-file&gt;</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llvm-ranlib</b> command is similar to the common Unix utility, <code>ranlib</code>. It adds or updates the symbol table in an LLVM archive file. Note that using the <b>llvm-ar</b> modifier <i>s</i> is usually more efficient than running <b>llvm-ranlib</b> which is only provided only for completness and compatibility. Unlike other implementations of <code>ranlib</code>, <b>llvm-ranlib</b> indexes LLVM bitcode files, not native object modules. You can list the contents of the symbol table with the <code>llvm-nm -s</code> command.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="archive-file"><i>archive-file</i></dt>
+<dd>
+
+<p>Specifies the archive-file to which the symbol table is added or updated.</p>
+
+</dd>
+<dt id="version"><i>--version</i></dt>
+<dd>
+
+<p>Print the version of <b>llvm-ranlib</b> and exit without building a symbol table.</p>
+
+</dd>
+<dt id="help"><i>-help</i></dt>
+<dd>
+
+<p>Print usage help for <b>llvm-ranlib</b> and exit without building a symbol table.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-ranlib</b> succeeds, it will exit with 0. If an error occurs, a non-zero exit code will be returned.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>llvm-ar</a>, ranlib(1)</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-prof</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-prof - print execution profile of LLVM program</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-prof</b> [<i>options</i>] [<i>bitcode file</i>] [<i>llvmprof.out</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llvm-prof</b> tool reads in an <i>llvmprof.out</i> file (which can optionally use a specific file with the third program argument), a bitcode file for the program, and produces a human readable report, suitable for determining where the program hotspots are.</p>
+
+<p>This program is often used in conjunction with the <i>utils/profile.pl</i> script. This script automatically instruments a program, runs it with the JIT, then runs <b>llvm-prof</b> to format a report. To get more information about <i>utils/profile.pl</i>, execute it with the <b>-help</b> option.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="annotated-llvm-or--A"><b>--annotated-llvm</b> or <b>-A</b></dt>
+<dd>
+
+<p>In addition to the normal report printed, print out the code for the program, annotated with execution frequency information. This can be particularly useful when trying to visualize how frequently basic blocks are executed. This is most useful with basic block profiling information or better.</p>
+
+</dd>
+<dt id="print-all-code"><b>--print-all-code</b></dt>
+<dd>
+
+<p>Using this option enables the <b>--annotated-llvm</b> option, but it prints the entire module, instead of just the most commonly executed functions.</p>
+
+</dd>
+<dt id="time-passes"><b>--time-passes</b></dt>
+<dd>
+
+<p>Record the amount of time needed for each pass and print it to standard error.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p><b>llvm-prof</b> returns 1 if it cannot load the bitcode file or the profile information. Otherwise, it exits with zero.</p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p><b>llvm-prof</b> is maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

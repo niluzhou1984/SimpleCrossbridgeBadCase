@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-link</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-link - LLVM linker</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-link</b> [<i>options</i>] <i>filename ...</i></p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>llvm-link</b> takes several LLVM bitcode files and links them together into a single LLVM bitcode file. It writes the output file to standard output, unless the <b>-o</b> option is used to specify a filename.</p>
+
+<p><b>llvm-link</b> attempts to load the input files from the current directory. If that fails, it looks for each file in each of the directories specified by the <b>-L</b> options on the command line. The library search paths are global; each one is searched for every input file if necessary. The directories are searched in the order they were specified on the command line.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="L-directory"><b>-L</b> <i>directory</i></dt>
+<dd>
+
+<p>Add the specified <i>directory</i> to the library search path. When looking for libraries, <b>llvm-link</b> will look in path name for libraries. This option can be specified multiple times; <b>llvm-link</b> will search inside these directories in the order in which they were specified on the command line.</p>
+
+</dd>
+<dt id="f"><b>-f</b></dt>
+<dd>
+
+<p>Enable binary output on terminals. Normally, <b>llvm-link</b> will refuse to write raw bitcode output if the output stream is a terminal. With this option, <b>llvm-link</b> will write raw bitcode regardless of the output device.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output file name. If <i>filename</i> is <code>-</code>, then <b>llvm-link</b> will write its output to standard output.</p>
+
+</dd>
+<dt id="S"><b>-S</b></dt>
+<dd>
+
+<p>Write output in LLVM intermediate language (instead of bitcode).</p>
+
+</dd>
+<dt id="d"><b>-d</b></dt>
+<dd>
+
+<p>If specified, <b>llvm-link</b> prints a human-readable version of the output bitcode file to standard error.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="v"><b>-v</b></dt>
+<dd>
+
+<p>Verbose mode. Print information about what <b>llvm-link</b> is doing. This typically includes a message for each bitcode file linked in and for each library found.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-link</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>gccld</a></p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

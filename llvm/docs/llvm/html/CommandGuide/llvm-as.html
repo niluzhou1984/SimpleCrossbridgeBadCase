@@ -1,0 +1,85 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-as</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-as - LLVM assembler</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-as</b> [<i>options</i>] [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>llvm-as</b> is the LLVM assembler. It reads a file containing human-readable LLVM assembly language, translates it to LLVM bitcode, and writes the result into a file or to standard output.</p>
+
+<p>If <i>filename</i> is omitted or is <code>-</code>, then <b>llvm-as</b> reads its input from standard input.</p>
+
+<p>If an output file is not specified with the <b>-o</b> option, then <b>llvm-as</b> sends its output to a file or standard output by following these rules:</p>
+
+<ul>
+
+<li><p>If the input is standard input, then the output is standard output.</p>
+
+</li>
+<li><p>If the input is a file that ends with <code>.ll</code>, then the output file is of the same name, except that the suffix is changed to <code>.bc</code>.</p>
+
+</li>
+<li><p>If the input is a file that does not end with the <code>.ll</code> suffix, then the output file has the same name as the input file, except that the <code>.bc</code> suffix is appended.</p>
+
+</li>
+</ul>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="f"><b>-f</b></dt>
+<dd>
+
+<p>Enable binary output on terminals. Normally, <b>llvm-as</b> will refuse to write raw bitcode output if the output stream is a terminal. With this option, <b>llvm-as</b> will write raw bitcode regardless of the output device.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output file name. If <i>filename</i> is <code>-</code>, then <b>llvm-as</b> sends its output to standard output.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-as</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>llvm-dis</a>, <a>gccas</a></p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

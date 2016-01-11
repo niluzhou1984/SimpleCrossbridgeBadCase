@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-diff</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-diff - LLVM structural &#39;diff&#39;</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-diff</b> [<i>options</i>] <i>module 1</i> <i>module 2</i> [<i>global name ...</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>llvm-diff</b> compares the structure of two LLVM modules, primarily focusing on differences in function definitions. Insignificant differences, such as changes in the ordering of globals or in the names of local values, are ignored.</p>
+
+<p>An input module will be interpreted as an assembly file if its name ends in &#39;.ll&#39;; otherwise it will be read in as a bitcode file.</p>
+
+<p>If a list of global names is given, just the values with those names are compared; otherwise, all global values are compared, and diagnostics are produced for globals which only appear in one module or the other.</p>
+
+<p><b>llvm-diff</b> compares two functions by comparing their basic blocks, beginning with the entry blocks. If the terminators seem to match, then the corresponding successors are compared; otherwise they are ignored. This algorithm is very sensitive to changes in control flow, which tend to stop any downstream changes from being detected.</p>
+
+<p><b>llvm-diff</b> is intended as a debugging tool for writers of LLVM passes and frontends. It does not have a stable output format.</p>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-diff</b> finds no differences between the modules, it will exit with 0 and produce no output. Otherwise it will exit with a non-zero value.</p>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>Many important differences, like changes in linkage or function attributes, are not diagnosed.</p>
+
+<p>Changes in memory behavior (for example, coalescing loads) can cause massive detected differences in blocks.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

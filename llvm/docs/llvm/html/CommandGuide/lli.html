@@ -1,0 +1,266 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>lli</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>lli - directly execute programs from LLVM bitcode</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>lli</b> [<i>options</i>] [<i>filename</i>] [<i>program args</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>lli</b> directly executes programs in LLVM bitcode format. It takes a program in LLVM bitcode format and executes it using a just-in-time compiler, if one is available for the current architecture, or an interpreter. <b>lli</b> takes all of the same code generator options as <a>llc</a>, but they are only effective when <b>lli</b> is using the just-in-time compiler.</p>
+
+<p>If <i>filename</i> is not specified, then <b>lli</b> reads the LLVM bitcode for the program from standard input.</p>
+
+<p>The optional <i>args</i> specified on the command line are passed to the program as arguments.</p>
+
+<h1 id="GENERAL-OPTIONS">GENERAL OPTIONS</h1>
+
+<dl>
+
+<dt id="fake-argv0-executable"><b>-fake-argv0</b>=<i>executable</i></dt>
+<dd>
+
+<p>Override the <code>argv[0]</code> value passed into the executing program.</p>
+
+</dd>
+<dt id="force-interpreter-false-true"><b>-force-interpreter</b>=<i>{false,true}</i></dt>
+<dd>
+
+<p>If set to true, use the interpreter even if a just-in-time compiler is available for this architecture. Defaults to false.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="load-puginfilename"><b>-load</b>=<i>puginfilename</i></dt>
+<dd>
+
+<p>Causes <b>lli</b> to load the plugin (shared object) named <i>pluginfilename</i> and use it for optimization.</p>
+
+</dd>
+<dt id="stats"><b>-stats</b></dt>
+<dd>
+
+<p>Print statistics from the code-generation passes. This is only meaningful for the just-in-time compiler, at present.</p>
+
+</dd>
+<dt id="time-passes"><b>-time-passes</b></dt>
+<dd>
+
+<p>Record the amount of time needed for each code-generation pass and print it to standard error.</p>
+
+</dd>
+<dt id="version"><b>-version</b></dt>
+<dd>
+
+<p>Print out the version of <b>lli</b> and exit without doing anything else.</p>
+
+</dd>
+</dl>
+
+<h1 id="TARGET-OPTIONS">TARGET OPTIONS</h1>
+
+<dl>
+
+<dt id="mtriple-target-triple"><b>-mtriple</b>=<i>target triple</i></dt>
+<dd>
+
+<p>Override the target triple specified in the input bitcode file with the specified string. This may result in a crash if you pick an architecture which is not compatible with the current system.</p>
+
+</dd>
+<dt id="march-arch"><b>-march</b>=<i>arch</i></dt>
+<dd>
+
+<p>Specify the architecture for which to generate assembly, overriding the target encoded in the bitcode file. See the output of <b>llc -help</b> for a list of valid architectures. By default this is inferred from the target triple or autodetected to the current architecture.</p>
+
+</dd>
+<dt id="mcpu-cpuname"><b>-mcpu</b>=<i>cpuname</i></dt>
+<dd>
+
+<p>Specify a specific chip in the current architecture to generate code for. By default this is inferred from the target triple and autodetected to the current architecture. For a list of available CPUs, use: <b>llvm-as &lt; /dev/null | llc -march=xyz -mcpu=help</b></p>
+
+</dd>
+<dt id="mattr-a1-a2--a3"><b>-mattr</b>=<i>a1,+a2,-a3,...</i></dt>
+<dd>
+
+<p>Override or control specific attributes of the target, such as whether SIMD operations are enabled or not. The default set of attributes is set by the current CPU. For a list of available attributes, use: <b>llvm-as &lt; /dev/null | llc -march=xyz -mattr=help</b></p>
+
+</dd>
+</dl>
+
+<h1 id="FLOATING-POINT-OPTIONS">FLOATING POINT OPTIONS</h1>
+
+<dl>
+
+<dt id="disable-excess-fp-precision"><b>-disable-excess-fp-precision</b></dt>
+<dd>
+
+<p>Disable optimizations that may increase floating point precision.</p>
+
+</dd>
+<dt id="enable-no-infs-fp-math"><b>-enable-no-infs-fp-math</b></dt>
+<dd>
+
+<p>Enable optimizations that assume no Inf values.</p>
+
+</dd>
+<dt id="enable-no-nans-fp-math"><b>-enable-no-nans-fp-math</b></dt>
+<dd>
+
+<p>Enable optimizations that assume no NAN values.</p>
+
+</dd>
+<dt id="enable-unsafe-fp-math"><b>-enable-unsafe-fp-math</b></dt>
+<dd>
+
+<p>Causes <b>lli</b> to enable optimizations that may decrease floating point precision.</p>
+
+</dd>
+<dt id="soft-float"><b>-soft-float</b></dt>
+<dd>
+
+<p>Causes <b>lli</b> to generate software floating point library calls instead of equivalent hardware instructions.</p>
+
+</dd>
+</dl>
+
+<h1 id="CODE-GENERATION-OPTIONS">CODE GENERATION OPTIONS</h1>
+
+<dl>
+
+<dt id="code-model-model"><b>-code-model</b>=<i>model</i></dt>
+<dd>
+
+<p>Choose the code model from:</p>
+
+<pre><code>    default: Target default code model
+    small: Small code model
+    kernel: Kernel code model
+    medium: Medium code model
+    large: Large code model</code></pre>
+
+</dd>
+<dt id="disable-post-RA-scheduler"><b>-disable-post-RA-scheduler</b></dt>
+<dd>
+
+<p>Disable scheduling after register allocation.</p>
+
+</dd>
+<dt id="disable-spill-fusing"><b>-disable-spill-fusing</b></dt>
+<dd>
+
+<p>Disable fusing of spill code into instructions.</p>
+
+</dd>
+<dt id="enable-correct-eh-support"><b>-enable-correct-eh-support</b></dt>
+<dd>
+
+<p>Make the -lowerinvoke pass insert expensive, but correct, EH code.</p>
+
+</dd>
+<dt id="jit-enable-eh"><b>-jit-enable-eh</b></dt>
+<dd>
+
+<p>Exception handling should be enabled in the just-in-time compiler.</p>
+
+</dd>
+<dt id="join-liveintervals"><b>-join-liveintervals</b></dt>
+<dd>
+
+<p>Coalesce copies (default=true).</p>
+
+</dd>
+<dt id="nozero-initialized-in-bss-Dont-place-zero-initialized-symbols-into-the-BSS-section"><b>-nozero-initialized-in-bss</b> Don&#39;t place zero-initialized symbols into the BSS section.</dt>
+<dd>
+
+</dd>
+<dt id="pre-RA-sched-scheduler"><b>-pre-RA-sched</b>=<i>scheduler</i></dt>
+<dd>
+
+<p>Instruction schedulers available (before register allocation):</p>
+
+<pre><code>    =default: Best scheduler for the target 
+    =none: No scheduling: breadth first sequencing 
+    =simple: Simple two pass scheduling: minimize critical path and maximize processor utilization 
+    =simple-noitin: Simple two pass scheduling: Same as simple except using generic latency 
+    =list-burr: Bottom-up register reduction list scheduling 
+    =list-tdrr: Top-down register reduction list scheduling 
+    =list-td: Top-down list scheduler -print-machineinstrs - Print generated machine code</code></pre>
+
+</dd>
+<dt id="regalloc-allocator"><b>-regalloc</b>=<i>allocator</i></dt>
+<dd>
+
+<p>Register allocator to use (default=linearscan)</p>
+
+<pre><code>    =bigblock: Big-block register allocator 
+    =linearscan: linear scan register allocator =local -   local register allocator 
+    =simple: simple register allocator </code></pre>
+
+</dd>
+<dt id="relocation-model-model"><b>-relocation-model</b>=<i>model</i></dt>
+<dd>
+
+<p>Choose relocation model from:</p>
+
+<pre><code>    =default: Target default relocation model 
+    =static: Non-relocatable code =pic -   Fully relocatable, position independent code 
+    =dynamic-no-pic: Relocatable external references, non-relocatable code </code></pre>
+
+</dd>
+<dt id="spiller"><b>-spiller</b></dt>
+<dd>
+
+<p>Spiller to use (default=local)</p>
+
+<pre><code>    =simple: simple spiller 
+    =local: local spiller </code></pre>
+
+</dd>
+<dt id="x86-asm-syntax-syntax"><b>-x86-asm-syntax</b>=<i>syntax</i></dt>
+<dd>
+
+<p>Choose style of code to emit from X86 backend:</p>
+
+<pre><code>    =att: Emit AT&amp;T-style assembly 
+    =intel: Emit Intel-style assembly</code></pre>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>lli</b> fails to load the program, it will exit with an exit code of 1. Otherwise, it will return the exit code of the program it executes.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>llc</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

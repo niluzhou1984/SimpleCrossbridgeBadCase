@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-extract</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-extract - extract a function from an LLVM module</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-extract</b> [<i>options</i>] <b>--func</b> <i>function-name</i> [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llvm-extract</b> command takes the name of a function and extracts it from the specified LLVM bitcode file. It is primarily used as a debugging tool to reduce test cases from larger programs that are triggering a bug.</p>
+
+<p>In addition to extracting the bitcode of the specified function, <b>llvm-extract</b> will also remove unreachable global variables, prototypes, and unused types.</p>
+
+<p>The <b>llvm-extract</b> command reads its input from standard input if filename is omitted or if filename is -. The output is always written to standard output, unless the <b>-o</b> option is specified (see below).</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="f"><b>-f</b></dt>
+<dd>
+
+<p>Enable binary output on terminals. Normally, <b>llvm-extract</b> will refuse to write raw bitcode output if the output stream is a terminal. With this option, <b>llvm-extract</b> will write raw bitcode regardless of the output device.</p>
+
+</dd>
+<dt id="func-function-name"><b>--func</b> <i>function-name</i></dt>
+<dd>
+
+<p>Extract the function named <i>function-name</i> from the LLVM bitcode. May be specified multiple times to extract multiple functions at once.</p>
+
+</dd>
+<dt id="glob-global-name"><b>--glob</b> <i>global-name</i></dt>
+<dd>
+
+<p>Extract the global variable named <i>global-name</i> from the LLVM bitcode. May be specified multiple times to extract multiple global variables at once.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output filename. If filename is &quot;-&quot; (the default), then <b>llvm-extract</b> sends its output to standard output.</p>
+
+</dd>
+<dt id="S"><b>-S</b></dt>
+<dd>
+
+<p>Write output in LLVM intermediate language (instead of bitcode).</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-extract</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>bugpoint</a></p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

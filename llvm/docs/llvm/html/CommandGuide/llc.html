@@ -1,0 +1,232 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llc</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llc - LLVM static compiler</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llc</b> [<i>options</i>] [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llc</b> command compiles LLVM source inputs into assembly language for a specified architecture. The assembly language output can then be passed through a native assembler and linker to generate a native executable.</p>
+
+<p>The choice of architecture for the output assembly code is automatically determined from the input file, unless the <b>-march</b> option is used to override the default.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<p>If <i>filename</i> is - or omitted, <b>llc</b> reads from standard input. Otherwise, it will from <i>filename</i>. Inputs can be in either the LLVM assembly language format (.ll) or the LLVM bitcode format (.bc).</p>
+
+<p>If the <b>-o</b> option is omitted, then <b>llc</b> will send its output to standard output if the input is from standard input. If the <b>-o</b> option specifies -, then the output will also be sent to standard output.</p>
+
+<p>If no <b>-o</b> option is specified and an input file other than - is specified, then <b>llc</b> creates the output filename by taking the input filename, removing any existing <i>.bc</i> extension, and adding a <i>.s</i> suffix.</p>
+
+<p>Other <b>llc</b> options are as follows:</p>
+
+<h2 id="End-user-Options">End-user Options</h2>
+
+<dl>
+
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="O-uint"><b>-O</b>=<i>uint</i></dt>
+<dd>
+
+<p>Generate code at different optimization levels. These correspond to the <i>-O0</i>, <i>-O1</i>, <i>-O2</i>, <i>-O3</i>, and <i>-O4</i> optimization levels used by <b>llvm-gcc</b> and <b>clang</b>.</p>
+
+</dd>
+<dt id="mtriple-target-triple"><b>-mtriple</b>=<i>target triple</i></dt>
+<dd>
+
+<p>Override the target triple specified in the input file with the specified string.</p>
+
+</dd>
+<dt id="march-arch"><b>-march</b>=<i>arch</i></dt>
+<dd>
+
+<p>Specify the architecture for which to generate assembly, overriding the target encoded in the input file. See the output of <b>llc -help</b> for a list of valid architectures. By default this is inferred from the target triple or autodetected to the current architecture.</p>
+
+</dd>
+<dt id="mcpu-cpuname"><b>-mcpu</b>=<i>cpuname</i></dt>
+<dd>
+
+<p>Specify a specific chip in the current architecture to generate code for. By default this is inferred from the target triple and autodetected to the current architecture. For a list of available CPUs, use: <b>llvm-as &lt; /dev/null | llc -march=xyz -mcpu=help</b></p>
+
+</dd>
+<dt id="mattr-a1-a2--a3"><b>-mattr</b>=<i>a1,+a2,-a3,...</i></dt>
+<dd>
+
+<p>Override or control specific attributes of the target, such as whether SIMD operations are enabled or not. The default set of attributes is set by the current CPU. For a list of available attributes, use: <b>llvm-as &lt; /dev/null | llc -march=xyz -mattr=help</b></p>
+
+</dd>
+<dt id="disable-fp-elim"><b>--disable-fp-elim</b></dt>
+<dd>
+
+<p>Disable frame pointer elimination optimization.</p>
+
+</dd>
+<dt id="disable-excess-fp-precision"><b>--disable-excess-fp-precision</b></dt>
+<dd>
+
+<p>Disable optimizations that may produce excess precision for floating point. Note that this option can dramatically slow down code on some systems (e.g. X86).</p>
+
+</dd>
+<dt id="enable-no-infs-fp-math"><b>--enable-no-infs-fp-math</b></dt>
+<dd>
+
+<p>Enable optimizations that assume no Inf values.</p>
+
+</dd>
+<dt id="enable-no-nans-fp-math"><b>--enable-no-nans-fp-math</b></dt>
+<dd>
+
+<p>Enable optimizations that assume no NAN values.</p>
+
+</dd>
+<dt id="enable-unsafe-fp-math"><b>--enable-unsafe-fp-math</b></dt>
+<dd>
+
+<p>Enable optimizations that make unsafe assumptions about IEEE math (e.g. that addition is associative) or may not work for all input ranges. These optimizations allow the code generator to make use of some instructions which would otherwise not be usable (such as fsin on X86).</p>
+
+</dd>
+<dt id="enable-correct-eh-support"><b>--enable-correct-eh-support</b></dt>
+<dd>
+
+<p>Instruct the <b>lowerinvoke</b> pass to insert code for correct exception handling support. This is expensive and is by default omitted for efficiency.</p>
+
+</dd>
+<dt id="stats"><b>--stats</b></dt>
+<dd>
+
+<p>Print statistics recorded by code-generation passes.</p>
+
+</dd>
+<dt id="time-passes"><b>--time-passes</b></dt>
+<dd>
+
+<p>Record the amount of time needed for each pass and print a report to standard error.</p>
+
+</dd>
+<dt id="load-dso_path"><b>--load</b>=<i>dso_path</i></dt>
+<dd>
+
+<p>Dynamically load <i>dso_path</i> (a path to a dynamically shared object) that implements an LLVM target. This will permit the target name to be used with the <b>-march</b> option so that code can be generated for that target.</p>
+
+</dd>
+</dl>
+
+<h2 id="Tuning-Configuration-Options">Tuning/Configuration Options</h2>
+
+<dl>
+
+<dt id="print-machineinstrs"><b>--print-machineinstrs</b></dt>
+<dd>
+
+<p>Print generated machine code between compilation phases (useful for debugging).</p>
+
+</dd>
+<dt id="regalloc-allocator"><b>--regalloc</b>=<i>allocator</i></dt>
+<dd>
+
+<p>Specify the register allocator to use. The default <i>allocator</i> is <i>local</i>. Valid register allocators are:</p>
+
+<dl>
+
+<dt id="simple"><i>simple</i></dt>
+<dd>
+
+<p>Very simple &quot;always spill&quot; register allocator</p>
+
+</dd>
+<dt id="local"><i>local</i></dt>
+<dd>
+
+<p>Local register allocator</p>
+
+</dd>
+<dt id="linearscan"><i>linearscan</i></dt>
+<dd>
+
+<p>Linear scan global register allocator</p>
+
+</dd>
+<dt id="iterativescan"><i>iterativescan</i></dt>
+<dd>
+
+<p>Iterative scan global register allocator</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt id="spiller-spiller"><b>--spiller</b>=<i>spiller</i></dt>
+<dd>
+
+<p>Specify the spiller to use for register allocators that support it. Currently this option is used only by the linear scan register allocator. The default <i>spiller</i> is <i>local</i>. Valid spillers are:</p>
+
+<dl>
+
+<dt id="simple1"><i>simple</i></dt>
+<dd>
+
+<p>Simple spiller</p>
+
+</dd>
+<dt id="local1"><i>local</i></dt>
+<dd>
+
+<p>Local spiller</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<h2 id="Intel-IA-32-specific-Options">Intel IA-32-specific Options</h2>
+
+<dl>
+
+<dt id="x86-asm-syntax-att-intel"><b>--x86-asm-syntax=att|intel</b></dt>
+<dd>
+
+<p>Specify whether to emit assembly code in AT&amp;T syntax (the default) or intel syntax.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llc</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>lli</a></p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

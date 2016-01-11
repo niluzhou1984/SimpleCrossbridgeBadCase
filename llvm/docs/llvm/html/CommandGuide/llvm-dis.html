@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-dis</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-dis - LLVM disassembler</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-dis</b> [<i>options</i>] [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p>The <b>llvm-dis</b> command is the LLVM disassembler. It takes an LLVM bitcode file and converts it into human-readable LLVM assembly language.</p>
+
+<p>If filename is omitted or specified as <code>-</code>, <b>llvm-dis</b> reads its input from standard input.</p>
+
+<p>If the input is being read from standard input, then <b>llvm-dis</b> will send its output to standard output by default. Otherwise, the output will be written to a file named after the input file, with a <code>.ll</code> suffix added (any existing <code>.bc</code> suffix will first be removed). You can override the choice of output file using the <b>-o</b> option.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="f"><b>-f</b></dt>
+<dd>
+
+<p>Enable binary output on terminals. Normally, <b>llvm-dis</b> will refuse to write raw bitcode output if the output stream is a terminal. With this option, <b>llvm-dis</b> will write raw bitcode regardless of the output device.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output file name. If <i>filename</i> is -, then the output is sent to standard output.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-dis</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>llvm-as</a></p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

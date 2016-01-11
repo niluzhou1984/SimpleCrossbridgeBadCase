@@ -1,0 +1,180 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>bugpoint</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>bugpoint - automatic test case reduction tool</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>bugpoint</b> [<i>options</i>] [<i>input LLVM ll/bc files</i>] [<i>LLVM passes</i>] <b>--args</b> <i>program arguments</i></p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>bugpoint</b> narrows down the source of problems in LLVM tools and passes. It can be used to debug three types of failures: optimizer crashes, miscompilations by optimizers, or bad native code generation (including problems in the static and JIT compilers). It aims to reduce large test cases to small, useful ones. For more information on the design and inner workings of <b>bugpoint</b>, as well as advice for using bugpoint, see <i>llvm/docs/Bugpoint.html</i> in the LLVM distribution.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="additional-so-library"><b>--additional-so</b> <i>library</i></dt>
+<dd>
+
+<p>Load the dynamic shared object <i>library</i> into the test program whenever it is run. This is useful if you are debugging programs which depend on non-LLVM libraries (such as the X or curses libraries) to run.</p>
+
+</dd>
+<dt id="append-exit-code-true-false"><b>--append-exit-code</b>=<i>{true,false}</i></dt>
+<dd>
+
+<p>Append the test programs exit code to the output file so that a change in exit code is considered a test failure. Defaults to false.</p>
+
+</dd>
+<dt id="args-program-args"><b>--args</b> <i>program args</i></dt>
+<dd>
+
+<p>Pass all arguments specified after -args to the test program whenever it runs. Note that if any of the <i>program args</i> start with a &#39;-&#39;, you should use:</p>
+
+<pre><code>    bugpoint [bugpoint args] --args -- [program args]</code></pre>
+
+<p>The &quot;--&quot; right after the <b>--args</b> option tells <b>bugpoint</b> to consider any options starting with <code>-</code> to be part of the <b>--args</b> option, not as options to <b>bugpoint</b> itself.</p>
+
+</dd>
+<dt id="tool-args-tool-args"><b>--tool-args</b> <i>tool args</i></dt>
+<dd>
+
+<p>Pass all arguments specified after --tool-args to the LLVM tool under test (<b>llc</b>, <b>lli</b>, etc.) whenever it runs. You should use this option in the following way:</p>
+
+<pre><code>    bugpoint [bugpoint args] --tool-args -- [tool args]</code></pre>
+
+<p>The &quot;--&quot; right after the <b>--tool-args</b> option tells <b>bugpoint</b> to consider any options starting with <code>-</code> to be part of the <b>--tool-args</b> option, not as options to <b>bugpoint</b> itself. (See <b>--args</b>, above.)</p>
+
+</dd>
+<dt id="safe-tool-args-tool-args"><b>--safe-tool-args</b> <i>tool args</i></dt>
+<dd>
+
+<p>Pass all arguments specified after <b>--safe-tool-args</b> to the &quot;safe&quot; execution tool.</p>
+
+</dd>
+<dt id="gcc-tool-args-gcc-tool-args"><b>--gcc-tool-args</b> <i>gcc tool args</i></dt>
+<dd>
+
+<p>Pass all arguments specified after <b>--gcc-tool-args</b> to the invocation of <b>gcc</b>.</p>
+
+</dd>
+<dt id="opt-args-opt-args"><b>--opt-args</b> <i>opt args</i></dt>
+<dd>
+
+<p>Pass all arguments specified after <b>--opt-args</b> to the invocation of <b>opt</b>.</p>
+
+</dd>
+<dt id="disable--dce-simplifycfg"><b>--disable-{dce,simplifycfg}</b></dt>
+<dd>
+
+<p>Do not run the specified passes to clean up and reduce the size of the test program. By default, <b>bugpoint</b> uses these passes internally when attempting to reduce test programs. If you&#39;re trying to find a bug in one of these passes, <b>bugpoint</b> may crash.</p>
+
+</dd>
+<dt id="enable-valgrind"><b>--enable-valgrind</b></dt>
+<dd>
+
+<p>Use valgrind to find faults in the optimization phase. This will allow bugpoint to find otherwise asymptomatic problems caused by memory mis-management.</p>
+
+</dd>
+<dt id="find-bugs"><b>-find-bugs</b></dt>
+<dd>
+
+<p>Continually randomize the specified passes and run them on the test program until a bug is found or the user kills <b>bugpoint</b>.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="input-filename"><b>--input</b> <i>filename</i></dt>
+<dd>
+
+<p>Open <i>filename</i> and redirect the standard input of the test program, whenever it runs, to come from that file.</p>
+
+</dd>
+<dt id="load-plugin"><b>--load</b> <i>plugin</i></dt>
+<dd>
+
+<p>Load the dynamic object <i>plugin</i> into <b>bugpoint</b> itself. This object should register new optimization passes. Once loaded, the object will add new command line options to enable various optimizations. To see the new complete list of optimizations, use the <b>-help</b> and <b>--load</b> options together; for example:</p>
+
+<pre><code>    bugpoint --load myNewPass.so -help</code></pre>
+
+</dd>
+<dt id="mlimit-megabytes"><b>--mlimit</b> <i>megabytes</i></dt>
+<dd>
+
+<p>Specifies an upper limit on memory usage of the optimization and codegen. Set to zero to disable the limit.</p>
+
+</dd>
+<dt id="output-filename"><b>--output</b> <i>filename</i></dt>
+<dd>
+
+<p>Whenever the test program produces output on its standard output stream, it should match the contents of <i>filename</i> (the &quot;reference output&quot;). If you do not use this option, <b>bugpoint</b> will attempt to generate a reference output by compiling the program with the &quot;safe&quot; backend and running it.</p>
+
+</dd>
+<dt id="profile-info-file-filename"><b>--profile-info-file</b> <i>filename</i></dt>
+<dd>
+
+<p>Profile file loaded by <b>--profile-loader</b>.</p>
+
+</dd>
+<dt id="run--int-jit-llc-cbe-custom"><b>--run-{int,jit,llc,cbe,custom}</b></dt>
+<dd>
+
+<p>Whenever the test program is compiled, <b>bugpoint</b> should generate code for it using the specified code generator. These options allow you to choose the interpreter, the JIT compiler, the static native code compiler, the C backend, or a custom command (see <b>--exec-command</b>) respectively.</p>
+
+</dd>
+<dt id="safe--llc-cbe-custom"><b>--safe-{llc,cbe,custom}</b></dt>
+<dd>
+
+<p>When debugging a code generator, <b>bugpoint</b> should use the specified code generator as the &quot;safe&quot; code generator. This is a known-good code generator used to generate the &quot;reference output&quot; if it has not been provided, and to compile portions of the program that as they are excluded from the testcase. These options allow you to choose the static native code compiler, the C backend, or a custom command, (see <b>--exec-command</b>) respectively. The interpreter and the JIT backends cannot currently be used as the &quot;safe&quot; backends.</p>
+
+</dd>
+<dt id="exec-command-command"><b>--exec-command</b> <i>command</i></dt>
+<dd>
+
+<p>This option defines the command to use with the <b>--run-custom</b> and <b>--safe-custom</b> options to execute the bitcode testcase. This can be useful for cross-compilation.</p>
+
+</dd>
+<dt id="safe-path-path"><b>--safe-path</b> <i>path</i></dt>
+<dd>
+
+<p>This option defines the path to the command to execute with the <b>--safe-{int,jit,llc,cbe,custom}</b> option.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>bugpoint</b> succeeds in finding a problem, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>opt</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

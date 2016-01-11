@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>llvm-config</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>llvm-config - Print LLVM compilation options</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>llvm-config</b> <i>option</i> [<i>components</i>...]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>llvm-config</b> makes it easier to build applications that use LLVM. It can print the compiler flags, linker flags and object libraries needed to link against LLVM.</p>
+
+<h1 id="EXAMPLES">EXAMPLES</h1>
+
+<p>To link against the JIT:</p>
+
+<pre><code>  g++ `llvm-config --cxxflags` -o HowToUseJIT.o -c HowToUseJIT.cpp
+  g++ `llvm-config --ldflags` -o HowToUseJIT HowToUseJIT.o \
+      `llvm-config --libs engine bcreader scalaropts`</code></pre>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="version"><b>--version</b></dt>
+<dd>
+
+<p>Print the version number of LLVM.</p>
+
+</dd>
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of <b>llvm-config</b> arguments.</p>
+
+</dd>
+<dt id="prefix"><b>--prefix</b></dt>
+<dd>
+
+<p>Print the installation prefix for LLVM.</p>
+
+</dd>
+<dt id="src-root"><b>--src-root</b></dt>
+<dd>
+
+<p>Print the source root from which LLVM was built.</p>
+
+</dd>
+<dt id="obj-root"><b>--obj-root</b></dt>
+<dd>
+
+<p>Print the object root used to build LLVM.</p>
+
+</dd>
+<dt id="bindir"><b>--bindir</b></dt>
+<dd>
+
+<p>Print the installation directory for LLVM binaries.</p>
+
+</dd>
+<dt id="includedir"><b>--includedir</b></dt>
+<dd>
+
+<p>Print the installation directory for LLVM headers.</p>
+
+</dd>
+<dt id="libdir"><b>--libdir</b></dt>
+<dd>
+
+<p>Print the installation directory for LLVM libraries.</p>
+
+</dd>
+<dt id="cxxflags"><b>--cxxflags</b></dt>
+<dd>
+
+<p>Print the C++ compiler flags needed to use LLVM headers.</p>
+
+</dd>
+<dt id="ldflags"><b>--ldflags</b></dt>
+<dd>
+
+<p>Print the flags needed to link against LLVM libraries.</p>
+
+</dd>
+<dt id="libs"><b>--libs</b></dt>
+<dd>
+
+<p>Print all the libraries needed to link against the specified LLVM <i>components</i>, including any dependencies.</p>
+
+</dd>
+<dt id="libnames"><b>--libnames</b></dt>
+<dd>
+
+<p>Similar to <b>--libs</b>, but prints the bare filenames of the libraries without <b>-l</b> or pathnames. Useful for linking against a not-yet-installed copy of LLVM.</p>
+
+</dd>
+<dt id="libfiles"><b>--libfiles</b></dt>
+<dd>
+
+<p>Similar to <b>--libs</b>, but print the full path to each library file. This is useful when creating makefile dependencies, to ensure that a tool is relinked if any library it uses changes.</p>
+
+</dd>
+<dt id="components"><b>--components</b></dt>
+<dd>
+
+<p>Print all valid component names.</p>
+
+</dd>
+<dt id="targets-built"><b>--targets-built</b></dt>
+<dd>
+
+<p>Print the component names for all targets supported by this copy of LLVM.</p>
+
+</dd>
+<dt id="build-mode"><b>--build-mode</b></dt>
+<dd>
+
+<p>Print the build mode used when LLVM was built (e.g. Debug or Release)</p>
+
+</dd>
+</dl>
+
+<h1 id="COMPONENTS">COMPONENTS</h1>
+
+<p>To print a list of all available components, run <b>llvm-config --components</b>. In most cases, components correspond directly to LLVM libraries. Useful &quot;virtual&quot; components include:</p>
+
+<dl>
+
+<dt id="all"><b>all</b></dt>
+<dd>
+
+<p>Includes all LLVM libaries. The default if no components are specified.</p>
+
+</dd>
+<dt id="backend"><b>backend</b></dt>
+<dd>
+
+<p>Includes either a native backend or the C backend.</p>
+
+</dd>
+<dt id="engine"><b>engine</b></dt>
+<dd>
+
+<p>Includes either a native JIT or the bitcode interpreter.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>llvm-config</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,158 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>tblgen</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>tblgen - Target Description To C++ Code Generator</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>tblgen</b> [<i>options</i>] [<i>filename</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>tblgen</b> translates from target description (.td) files into C++ code that can be included in the definition of an LLVM target library. Most users of LLVM will not need to use this program. It is only for assisting with writing an LLVM target backend.</p>
+
+<p>The input and output of <b>tblgen</b> is beyond the scope of this short introduction. Please see the <i>CodeGeneration</i> page in the LLVM documentation.</p>
+
+<p>The <i>filename</i> argument specifies the name of a Target Description (.td) file to read as input.</p>
+
+<h1 id="OPTIONS">OPTIONS</h1>
+
+<dl>
+
+<dt id="help"><b>-help</b></dt>
+<dd>
+
+<p>Print a summary of command line options.</p>
+
+</dd>
+<dt id="o-filename"><b>-o</b> <i>filename</i></dt>
+<dd>
+
+<p>Specify the output file name. If <i>filename</i> is <code>-</code>, then <b>tblgen</b> sends its output to standard output.</p>
+
+</dd>
+<dt id="I-directory"><b>-I</b> <i>directory</i></dt>
+<dd>
+
+<p>Specify where to find other target description files for inclusion. The <i>directory</i> value should be a full or partial path to a directory that contains target description files.</p>
+
+</dd>
+<dt id="asmwriternum-N"><b>-asmwriternum</b> <i>N</i></dt>
+<dd>
+
+<p>Make -gen-asm-writer emit assembly writer number <i>N</i>.</p>
+
+</dd>
+<dt id="class-class-Name"><b>-class</b> <i>class Name</i></dt>
+<dd>
+
+<p>Print the enumeration list for this class.</p>
+
+</dd>
+<dt id="print-records"><b>-print-records</b></dt>
+<dd>
+
+<p>Print all records to standard output (default).</p>
+
+</dd>
+<dt id="print-enums"><b>-print-enums</b></dt>
+<dd>
+
+<p>Print enumeration values for a class</p>
+
+</dd>
+<dt id="gen-emitter"><b>-gen-emitter</b></dt>
+<dd>
+
+<p>Generate machine code emitter.</p>
+
+</dd>
+<dt id="gen-register-enums"><b>-gen-register-enums</b></dt>
+<dd>
+
+<p>Generate the enumeration values for all registers.</p>
+
+</dd>
+<dt id="gen-register-desc"><b>-gen-register-desc</b></dt>
+<dd>
+
+<p>Generate a register info description for each register.</p>
+
+</dd>
+<dt id="gen-register-desc-header"><b>-gen-register-desc-header</b></dt>
+<dd>
+
+<p>Generate a register info description header for each register.</p>
+
+</dd>
+<dt id="gen-instr-enums"><b>-gen-instr-enums</b></dt>
+<dd>
+
+<p>Generate enumeration values for instructions.</p>
+
+</dd>
+<dt id="gen-instr-desc"><b>-gen-instr-desc</b></dt>
+<dd>
+
+<p>Generate instruction descriptions.</p>
+
+</dd>
+<dt id="gen-asm-writer"><b>-gen-asm-writer</b></dt>
+<dd>
+
+<p>Generate the assembly writer.</p>
+
+</dd>
+<dt id="gen-dag-isel"><b>-gen-dag-isel</b></dt>
+<dd>
+
+<p>Generate a DAG (Directed Acycle Graph) instruction selector.</p>
+
+</dd>
+<dt id="gen-subtarget"><b>-gen-subtarget</b></dt>
+<dd>
+
+<p>Generate subtarget enumerations.</p>
+
+</dd>
+<dt id="gen-intrinsic"><b>-gen-intrinsic</b></dt>
+<dd>
+
+<p>Generate intrinsic information.</p>
+
+</dd>
+<dt id="version"><b>-version</b></dt>
+<dd>
+
+<p>Show the version number of this program.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p>If <b>tblgen</b> succeeds, it will exit with 0. Otherwise, if an error occurs, it will exit with a non-zero value.</p>
+
+<h1 id="AUTHORS">AUTHORS</h1>
+
+<p>Maintained by The LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+

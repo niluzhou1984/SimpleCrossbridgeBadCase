@@ -1,0 +1,320 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>lit</title>
+<link rel="stylesheet" href="manpage.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:ASSI@cygwin.nonet" />
+</head>
+
+<body>
+
+
+
+<h1 id="NAME">NAME</h1>
+
+<p>lit - LLVM Integrated Tester</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<p><b>lit</b> [<i>options</i>] [<i>tests</i>]</p>
+
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
+
+<p><b>lit</b> is a portable tool for executing LLVM and Clang style test suites, summarizing their results, and providing indication of failures. <b>lit</b> is designed to be a lightweight testing tool with as simple a user interface as possible.</p>
+
+<p><b>lit</b> should be run with one or more <i>tests</i> to run specified on the command line. Tests can be either individual test files or directories to search for tests (see <a href="#TEST-DISCOVERY">&quot;TEST DISCOVERY&quot;</a>).</p>
+
+<p>Each specified test will be executed (potentially in parallel) and once all tests have been run <b>lit</b> will print summary information on the number of tests which passed or failed (see <a href="#TEST-STATUS-RESULTS">&quot;TEST STATUS RESULTS&quot;</a>). The <b>lit</b> program will execute with a non-zero exit code if any tests fail.</p>
+
+<p>By default <b>lit</b> will use a succinct progress display and will only print summary information for test failures. See <a href="#OUTPUT-OPTIONS">&quot;OUTPUT OPTIONS&quot;</a> for options controlling the <b>lit</b> progress display and output.</p>
+
+<p><b>lit</b> also includes a number of options for controlling how tests are exected (specific features may depend on the particular test format). See <a href="#EXECUTION-OPTIONS">&quot;EXECUTION OPTIONS&quot;</a> for more information.</p>
+
+<p>Finally, <b>lit</b> also supports additional options for only running a subset of the options specified on the command line, see <a href="#SELECTION-OPTIONS">&quot;SELECTION OPTIONS&quot;</a> for more information.</p>
+
+<p>Users interested in the <b>lit</b> architecture or designing a <b>lit</b> testing implementation should see <a href="#LIT-ARCHITECTURE">&quot;LIT ARCHITECTURE&quot;</a></p>
+
+<h1 id="GENERAL-OPTIONS">GENERAL OPTIONS</h1>
+
+<dl>
+
+<dt id="h---help"><b>-h</b>, <b>--help</b></dt>
+<dd>
+
+<p>Show the <b>lit</b> help message.</p>
+
+</dd>
+<dt id="j-N---threads-N"><b>-j</b> <i>N</i>, <b>--threads</b>=<i>N</i></dt>
+<dd>
+
+<p>Run <i>N</i> tests in parallel. By default, this is automatically chosen to match the number of detected available CPUs.</p>
+
+</dd>
+<dt id="config-prefix-NAME"><b>--config-prefix</b>=<i>NAME</i></dt>
+<dd>
+
+<p>Search for <i>NAME.cfg</i> and <i>NAME.site.cfg</i> when searching for test suites, instead of <i>lit.cfg</i> and <i>lit.site.cfg</i>.</p>
+
+</dd>
+<dt id="param-NAME---param-NAME-VALUE"><b>--param</b> <i>NAME</i>, <b>--param</b> <i>NAME</i>=<i>VALUE</i></dt>
+<dd>
+
+<p>Add a user defined parameter <i>NAME</i> with the given <i>VALUE</i> (or the empty string if not given). The meaning and use of these parameters is test suite dependent.</p>
+
+</dd>
+</dl>
+
+<h1 id="OUTPUT-OPTIONS">OUTPUT OPTIONS</h1>
+
+<dl>
+
+<dt id="q---quiet"><b>-q</b>, <b>--quiet</b></dt>
+<dd>
+
+<p>Suppress any output except for test failures.</p>
+
+</dd>
+<dt id="s---succinct"><b>-s</b>, <b>--succinct</b></dt>
+<dd>
+
+<p>Show less output, for example don&#39;t show information on tests that pass.</p>
+
+</dd>
+<dt id="v---verbose"><b>-v</b>, <b>--verbose</b></dt>
+<dd>
+
+<p>Show more information on test failures, for example the entire test output instead of just the test result.</p>
+
+</dd>
+<dt id="no-progress-bar"><b>--no-progress-bar</b></dt>
+<dd>
+
+<p>Do not use curses based progress bar.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXECUTION-OPTIONS">EXECUTION OPTIONS</h1>
+
+<dl>
+
+<dt id="path-PATH"><b>--path</b>=<i>PATH</i></dt>
+<dd>
+
+<p>Specify an addition <i>PATH</i> to use when searching for executables in tests.</p>
+
+</dd>
+<dt id="vg"><b>--vg</b></dt>
+<dd>
+
+<p>Run individual tests under valgrind (using the memcheck tool). The <i>--error-exitcode</i> argument for valgrind is used so that valgrind failures will cause the program to exit with a non-zero status.</p>
+
+</dd>
+<dt id="vg-arg-ARG"><b>--vg-arg</b>=<i>ARG</i></dt>
+<dd>
+
+<p>When <i>--vg</i> is used, specify an additional argument to pass to valgrind itself.</p>
+
+</dd>
+<dt id="time-tests"><b>--time-tests</b></dt>
+<dd>
+
+<p>Track the wall time individual tests take to execute and includes the results in the summary output. This is useful for determining which tests in a test suite take the most time to execute. Note that this option is most useful with <i>-j 1</i>.</p>
+
+</dd>
+</dl>
+
+<h1 id="SELECTION-OPTIONS">SELECTION OPTIONS</h1>
+
+<dl>
+
+<dt id="max-tests-N"><b>--max-tests</b>=<i>N</i></dt>
+<dd>
+
+<p>Run at most <i>N</i> tests and then terminate.</p>
+
+</dd>
+<dt id="max-time-N"><b>--max-time</b>=<i>N</i></dt>
+<dd>
+
+<p>Spend at most <i>N</i> seconds (approximately) running tests and then terminate.</p>
+
+</dd>
+<dt id="shuffle"><b>--shuffle</b></dt>
+<dd>
+
+<p>Run the tests in a random order.</p>
+
+</dd>
+</dl>
+
+<h1 id="ADDITIONAL-OPTIONS">ADDITIONAL OPTIONS</h1>
+
+<dl>
+
+<dt id="debug"><b>--debug</b></dt>
+<dd>
+
+<p>Run <b>lit</b> in debug mode, for debugging configuration issues and <b>lit</b> itself.</p>
+
+</dd>
+<dt id="show-suites"><b>--show-suites</b></dt>
+<dd>
+
+<p>List the discovered test suites as part of the standard output.</p>
+
+</dd>
+<dt id="no-tcl-as-sh"><b>--no-tcl-as-sh</b></dt>
+<dd>
+
+<p>Run Tcl scripts internally (instead of converting to shell scripts).</p>
+
+</dd>
+<dt id="repeat-N"><b>--repeat</b>=<i>N</i></dt>
+<dd>
+
+<p>Run each test <i>N</i> times. Currently this is primarily useful for timing tests, other results are not collated in any reasonable fashion.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXIT-STATUS">EXIT STATUS</h1>
+
+<p><b>lit</b> will exit with an exit code of 1 if there are any FAIL or XPASS results. Otherwise, it will exit with the status 0. Other exit codes used for non-test related failures (for example a user error or an internal program error).</p>
+
+<h1 id="TEST-DISCOVERY">TEST DISCOVERY</h1>
+
+<p>The inputs passed to <b>lit</b> can be either individual tests, or entire directories or hierarchies of tests to run. When <b>lit</b> starts up, the first thing it does is convert the inputs into a complete list of tests to run as part of <i>test discovery</i>.</p>
+
+<p>In the <b>lit</b> model, every test must exist inside some <i>test suite</i>. <b>lit</b> resolves the inputs specified on the command line to test suites by searching upwards from the input path until it finds a <i>lit.cfg</i> or <i>lit.site.cfg</i> file. These files serve as both a marker of test suites and as configuration files which <b>lit</b> loads in order to understand how to find and run the tests inside the test suite.</p>
+
+<p>Once <b>lit</b> has mapped the inputs into test suites it traverses the list of inputs adding tests for individual files and recursively searching for tests in directories.</p>
+
+<p>This behavior makes it easy to specify a subset of tests to run, while still allowing the test suite configuration to control exactly how tests are interpreted. In addition, <b>lit</b> always identifies tests by the test suite they are in, and their relative path inside the test suite. For appropriately configured projects, this allows <b>lit</b> to provide convenient and flexible support for out-of-tree builds.</p>
+
+<h1 id="TEST-STATUS-RESULTS">TEST STATUS RESULTS</h1>
+
+<p>Each test ultimately produces one of the following six results:</p>
+
+<dl>
+
+<dt id="PASS"><b>PASS</b></dt>
+<dd>
+
+<p>The test succeeded.</p>
+
+</dd>
+<dt id="XFAIL"><b>XFAIL</b></dt>
+<dd>
+
+<p>The test failed, but that is expected. This is used for test formats which allow specifying that a test does not currently work, but wish to leave it in the test suite.</p>
+
+</dd>
+<dt id="XPASS"><b>XPASS</b></dt>
+<dd>
+
+<p>The test succeeded, but it was expected to fail. This is used for tests which were specified as expected to fail, but are now succeeding (generally because the feautre they test was broken and has been fixed).</p>
+
+</dd>
+<dt id="FAIL"><b>FAIL</b></dt>
+<dd>
+
+<p>The test failed.</p>
+
+</dd>
+<dt id="UNRESOLVED"><b>UNRESOLVED</b></dt>
+<dd>
+
+<p>The test result could not be determined. For example, this occurs when the test could not be run, the test itself is invalid, or the test was interrupted.</p>
+
+</dd>
+<dt id="UNSUPPORTED"><b>UNSUPPORTED</b></dt>
+<dd>
+
+<p>The test is not supported in this environment. This is used by test formats which can report unsupported tests.</p>
+
+</dd>
+</dl>
+
+<p>Depending on the test format tests may produce additional information about their status (generally only for failures). See the <a href="#LIT-OUTPUT">Output</a> section for more information.</p>
+
+<h1 id="LIT-INFRASTRUCTURE">LIT INFRASTRUCTURE</h1>
+
+<p>This section describes the <b>lit</b> testing architecture for users interested in creating a new <b>lit</b> testing implementation, or extending an existing one.</p>
+
+<p><b>lit</b> proper is primarily an infrastructure for discovering and running arbitrary tests, and to expose a single convenient interface to these tests. <b>lit</b> itself doesn&#39;t know how to run tests, rather this logic is defined by <i>test suites</i>.</p>
+
+<h2 id="TEST-SUITES">TEST SUITES</h2>
+
+<p>As described in <a href="#TEST-DISCOVERY">&quot;TEST DISCOVERY&quot;</a>, tests are always located inside a <i>test suite</i>. Test suites serve to define the format of the tests they contain, the logic for finding those tests, and any additional information to run the tests.</p>
+
+<p><b>lit</b> identifies test suites as directories containing <i>lit.cfg</i> or <i>lit.site.cfg</i> files (see also <b>--config-prefix</b>. Test suites are initially discovered by recursively searching up the directory hierarchy for all the input files passed on the command line. You can use <b>--show-suites</b> to display the discovered test suites at startup.</p>
+
+<p>Once a test suite is discovered, its config file is loaded. Config files themselves are Python modules which will be executed. When the config file is executed, two important global variables are predefined:</p>
+
+<dl>
+
+<dt id="lit"><b>lit</b></dt>
+<dd>
+
+<p>The global <b>lit</b> configuration object (a <i>LitConfig</i> instance), which defines the builtin test formats, global configuration parameters, and other helper routines for implementing test configurations.</p>
+
+</dd>
+<dt id="config"><b>config</b></dt>
+<dd>
+
+<p>This is the config object (a <i>TestingConfig</i> instance) for the test suite, which the config file is expected to populate. The following variables are also available on the <i>config</i> object, some of which must be set by the config and others are optional or predefined:</p>
+
+<p><b>name</b> <i>[required]</i> The name of the test suite, for use in reports and diagnostics.</p>
+
+<p><b>test_format</b> <i>[required]</i> The test format object which will be used to discover and run tests in the test suite. Generally this will be a builtin test format available from the <i>lit.formats</i> module.</p>
+
+<p><b>test_src_root</b> The filesystem path to the test suite root. For out-of-dir builds this is the directory that will be scanned for tests.</p>
+
+<p><b>test_exec_root</b> For out-of-dir builds, the path to the test suite root inside the object directory. This is where tests will be run and temporary output files places.</p>
+
+<p><b>environment</b> A dictionary representing the environment to use when executing tests in the suite.</p>
+
+<p><b>suffixes</b> For <b>lit</b> test formats which scan directories for tests, this variable as a list of suffixes to identify test files. Used by: <i>ShTest</i>, <i>TclTest</i>.</p>
+
+<p><b>substitutions</b> For <b>lit</b> test formats which substitute variables into a test script, the list of substitutions to perform. Used by: <i>ShTest</i>, <i>TclTest</i>.</p>
+
+<p><b>unsupported</b> Mark an unsupported directory, all tests within it will be reported as unsupported. Used by: <i>ShTest</i>, <i>TclTest</i>.</p>
+
+<p><b>parent</b> The parent configuration, this is the config object for the directory containing the test suite, or None.</p>
+
+<p><b>on_clone</b> The config is actually cloned for every subdirectory inside a test suite, to allow local configuration on a per-directory basis. The <i>on_clone</i> variable can be set to a Python function which will be called whenever a configuration is cloned (for a subdirectory). The function should takes three arguments: (1) the parent configuration, (2) the new configuration (which the <i>on_clone</i> function will generally modify), and (3) the test path to the new directory being scanned.</p>
+
+</dd>
+</dl>
+
+<h2 id="TEST-DISCOVERY1">TEST DISCOVERY</h2>
+
+<p>Once test suites are located, <b>lit</b> recursively traverses the source directory (following <i>test_src_root</i>) looking for tests. When <b>lit</b> enters a sub-directory, it first checks to see if a nest test suite is defined in that directory. If so, it loads that test suite recursively, otherwise it instantiates a local test config for the directory (see <a href="#LOCAL-CONFIGURATION-FILES">&quot;LOCAL CONFIGURATION FILES&quot;</a>).</p>
+
+<p>Tests are identified by the test suite they are contained within, and the relative path inside that suite. Note that the relative path may not refer to an actual file on disk; some test formats (such as <i>GoogleTest</i>) define &quot;virtual tests&quot; which have a path that contains both the path to the actual test file and a subpath to identify the virtual test.</p>
+
+<h2 id="LOCAL-CONFIGURATION-FILES">LOCAL CONFIGURATION FILES</h2>
+
+<p>When <b>lit</b> loads a subdirectory in a test suite, it instantiates a local test configuration by cloning the configuration for the parent direction -- the root of this configuration chain will always be a test suite. Once the test configuration is cloned <b>lit</b> checks for a <i>lit.local.cfg</i> file in the subdirectory. If present, this file will be loaded and can be used to specialize the configuration for each individual directory. This facility can be used to define subdirectories of optional tests, or to change other configuration parameters -- for example, to change the test format, or the suffixes which identify test files.</p>
+
+<h2 id="LIT-EXAMPLE-TESTS">LIT EXAMPLE TESTS</h2>
+
+<p>The <b>lit</b> distribution contains several example implementations of test suites in the <i>ExampleTests</i> directory.</p>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a href="http://man.he.net/man1/valgrind">valgrind(1)</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Written by Daniel Dunbar and maintained by the LLVM Team (<a href="http://llvm.org">http://llvm.org</a>).</p>
+
+
+</body>
+
+</html>
+
+
