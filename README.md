@@ -59,6 +59,7 @@ CrossBridge没有完整实现LLVM的FP_ROUND(高精度类型数据转低精度�
 在localDirName下会生成两程序
 * simpletest_crossbridge.exe： 经过CrossBridge编译后的结果
 * simpletest_llvm.exe:  经过原生llvm-2.9编译后的结果    
+
 另外生成一个经过CrossBridge编译后的结果的编译中间文件：    
 * simpletest.cpp.lto.1.as 这个文件是crossbridge编译过程中生成的Machine Instruction文件 
 
