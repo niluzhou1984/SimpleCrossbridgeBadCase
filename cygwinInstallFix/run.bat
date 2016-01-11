@@ -84,7 +84,7 @@ GOTO EXIT
 
 :: Install Cygwin and additional packages using CLI
 :NOCYGWIN
-setup-x86 --arch x86 --quiet-mode --no-admin --no-startmenu --no-desktop --no-shortcuts --root %LAUNCH_DIR%\cygwin --site http://mirrors.163.com/cygwin/ && setup-x86 --arch x86 --quiet-mode --no-admin --no-startmenu --no-desktop --no-shortcuts --root %CD%\cygwin --site http://mirrors.163.com/cygwin/ --packages libuuid1,libuuid-devel && run
+setup-x86 --arch x86 --quiet-mode --no-admin --no-startmenu --no-desktop --no-shortcuts --root %LAUNCH_DIR%\cygwin --site http://mirrors.163.com/cygwin/ && setup-x86 --arch x86 --quiet-mode --no-admin --no-startmenu --no-desktop --no-shortcuts --root %CD%\cygwin --site http://mirrors.163.com/cygwin/ --packages gcc-g++,make,libuuid1,libuuid-devel && run
 GOTO EXIT
 
 :: Exit hook
